@@ -12,10 +12,12 @@ namespace MAP.OA.UI.Portal.Controllers
     public class UserInfoController : Controller
     {
         // GET: UserInfo
-        IUserInfoService userInfoService = new UserInfoService(); // Spring.Net
+        //IUserInfoService UserInfoService = new UserInfoService(); // Spring.Net
+        public IUserInfoService UserInfoService { get; set; }
+
         public ActionResult Index()
         {   
-            return View(userInfoService.GetEntities(u => true));
+            return View(UserInfoService.GetEntities(u => true));
         }
 
         public ActionResult Create()
@@ -28,7 +30,7 @@ namespace MAP.OA.UI.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                userInfoService.Add(userInfo);
+                UserInfoService.Add(userInfo);
             }
             return RedirectToAction("Index");
         }
