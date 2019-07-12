@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace SpringNetDemo
 {
-    public class EFUserInfoDal : IUserInfoDal
+    public class UserInfoService
     {
-        public string Name { get; set; }
+        public IUserInfoDal UserInfoDal { get; set; }
+
         public void Show()
         {
-            Console.WriteLine("This is from EFUserInfoDal " + "(" + Name + ")");
+            UserInfoDal.Show();
+            Console.WriteLine("It is form UserInfoService");
         }
     }
 }

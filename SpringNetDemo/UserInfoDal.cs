@@ -8,9 +8,15 @@ namespace SpringNetDemo
 {
     public class UserInfoDal : IUserInfoDal
     {
+        public UserInfoDal(string Name)
+        {
+            this.Name = Name;
+        }
+
+        public string Name { get; set; }
         public void Show()
         {
-            Console.WriteLine("This is a test");
+            Console.WriteLine("This is from UserInfoDal" + "(" + Name + ")");
         }
     }
 }
