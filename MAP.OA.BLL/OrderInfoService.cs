@@ -17,9 +17,17 @@ namespace MAP.OA.BLL
         //    return orderInfo;
         //}
 
-        public override void SetCurrentDal()
-        {
-            CurrentDal = DbSession.OrderInfoDal;
-        }
+        #region using spring instead of
+        //public OrderInfoService(IDbSession dbSession)
+        //    : base(dbSession)
+        //{
+        //    this.DbSession = dbSession;
+        //}
+
+        //public override void SetCurrentDal()
+        //{
+        //    CurrentDal = DbSession.OrderInfoDal;
+        //} 
+        #endregion
     }
 }

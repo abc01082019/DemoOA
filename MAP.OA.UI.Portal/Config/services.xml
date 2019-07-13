@@ -2,9 +2,15 @@
 <objects xmlns="http://www.springframework.net">
 
   <object name ="UserInfoService" type="MAP.OA.BLL.UserInfoService, MAP.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession" />
+    <property name="CurrentDal" ref="UserInfoDal" />
+    <!--<constructor-arg index="0" ref="DbSession"/>-->
   </object>
 
   <object name ="OrderInfoService" type="MAP.OA.BLL.OrderInfoService, MAP.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession" />
+    <property name="CurrentDal" ref="OrderInfoDal" />
+    <!--<constructor-arg index="0" ref="DbSession"/>-->
   </object>
   
 </objects>

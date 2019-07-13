@@ -61,10 +61,17 @@ namespace MAP.OA.BLL
         //} 
         #endregion
 
+        #region  using spring instead of
+        //public UserInfoService(IDbSession dbSession)
+        //    :base(dbSession)
+        //{
+        //    this.DbSession = dbSession;
+        //}
 
-        public override void SetCurrentDal()
-        {
-            CurrentDal = DbSession.UserInfoDal;
-        }
+        //public override void SetCurrentDal()
+        //{
+        //    CurrentDal = DbSession.UserInfoDal;
+        //} 
+        #endregion
     }
 }

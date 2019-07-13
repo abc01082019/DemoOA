@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <!--spring.net 通过工厂实例来创建工厂对象的配置Demo-->
+  <!--<object name ="DbSessionFactory" type="MAP.OA.DALFactory.DbSessionFactory, MAP.OA.DALFactory" singleton="true">
+  </object>-->
+  <!--<object name ="DbSession" type="MAP.OA.DALFactory.DbSession, MAP.OA.DALFactory" singleton="false"
+          factory-method="GetCurrentDbSession" factory-object="DbSessionFactory">
+  </object>-->
+
+  <!--spring.net通过工厂的静态方法来创建对象的配置Demo-->
+  <object name ="DbSession" type="MAP.OA.DALFactory.DbSessionFactory, MAP.OA.DALFactory" singleton="false"
+        factory-method="GetCurrentDbSession">
+  </object>
+
+
+  <object name ="UserInfoDal" type="MAP.OA.EFDAL.UserInfoDal, MAP.OA.EFDAL" singleton="false" >
+  </object>
+  
+  <object name ="OrderInfoDal" type="MAP.OA.EFDAL.OrderInfoDal, MAP.OA.EFDAL" singleton="false" >
+  </object>
+
+</objects>

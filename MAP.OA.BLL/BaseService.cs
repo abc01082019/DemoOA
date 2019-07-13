@@ -20,20 +20,24 @@ namespace MAP.OA.BLL
 
         public IDbSession DbSession
         {
-            get
-            {
-                return DbSessionFactory.GetCurrentDbSession();
-            }
+            get;
+            //{
+            //    return DbSessionFactory.GetCurrentDbSession();
+            //}
+            set;
         }
 
-        public BaseService() // 构造函数调用子类重写的抽象方法
-        {
-            SetCurrentDal();
-        }
+        #region  using spring instead of
+        //public BaseService(IDbSession dbSession) // 构造函数调用子类重写的抽象方法
+        //{
+        //    DbSession = dbSession;
+        //    SetCurrentDal();
+        //}
 
-        public abstract void SetCurrentDal(); // 抽象方法 要求子类必须实现
+        //public abstract void SetCurrentDal(); // 抽象方法 要求子类必须实现 
+        #endregion
 
-        
+
         //CRUD
 
         #region Select/Read
