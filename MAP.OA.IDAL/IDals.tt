@@ -1,0 +1,18 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ output extension=".cs" #>
+
+<#
+var code = new CodeGenerationTools(this);
+var loader = new MetadataLoader(this);
+var region = new CodeRegion(this, 1);
+var ef = new MetadataTools(this);
+ 
+string inputFile = @"D:\Ejer\Documents\visual studio 2015\Projects\MAP.OA\MAP.OA.Model\DataModel.edmx";
+
+var ItemCollection = loader.CreateEdmItemCollection(inputFile);
+string namespaceName = code.VsNamespaceSuggestion();
+ 
+var fileManager = EntityFrameworkTemplateFileManager.Create(this);
+ 
+#>
