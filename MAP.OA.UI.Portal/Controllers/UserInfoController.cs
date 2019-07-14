@@ -16,7 +16,8 @@ namespace MAP.OA.UI.Portal.Controllers
         public IUserInfoService UserInfoService { get; set; }
 
         public ActionResult Index()
-        {   
+        {
+            throw new Exception("This is from UserInfoController..........................");
             return View(UserInfoService.GetEntities(u => true));
         }
 

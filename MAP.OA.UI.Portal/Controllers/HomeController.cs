@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MAP.OA.IBLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace MAP.OA.UI.Portal.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            throw new Exception("This is from HomeController..........................");
             return View();
         }
     }
