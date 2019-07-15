@@ -12,7 +12,6 @@ namespace MAP.OA.UI.Portal.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            throw new Exception("This is from HomeController..........................");
             return View();
         }
     }

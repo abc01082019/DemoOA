@@ -13,11 +13,12 @@ namespace MAP.OA.UI.Portal.App_Start
         {
             //filters.Add(new HandleErrorAttribute());
 
-            filters.Add(new MyExceptionFilterAttribute());
 
-            //ActionFilter ResultFilter
+            //ActionFilter, ResultFilter, ExceptionFilter
 
             //第三种filter: 异常过滤器
+            // Add our own ExceptionFilter
+            filters.Add(new MyExceptionFilter());
 
 
         }

@@ -61,7 +61,7 @@ namespace MAP.OA.BLL
         //} 
         #endregion
 
-        #region  using spring instead of
+        #region  override base methode
         //public UserInfoService(IDbSession dbSession)
         //    :base(dbSession)
         //{

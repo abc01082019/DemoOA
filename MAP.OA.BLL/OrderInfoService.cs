@@ -17,7 +17,7 @@ namespace MAP.OA.BLL
         //    return orderInfo;
         //}
 
-        #region using spring instead of
+        #region override base methode
         //public OrderInfoService(IDbSession dbSession)
         //    : base(dbSession)
         //{

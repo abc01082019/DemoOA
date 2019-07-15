@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MAP.OA.UI.Portal.Models
 {
-    public class MyExceptionFilterAttribute: HandleErrorAttribute
+    public class MyExceptionFilter: HandleErrorAttribute
     {
         public override void OnException(ExceptionContext filterContext)
         {
@@ -14,7 +14,7 @@ namespace MAP.OA.UI.Portal.Models
             base.OnException(filterContext);
 
 
-            // 直接把错误信息写到日志文件离去
+            // 直接把错误信息写到日志文件离去/Add the exception into a log by using Common.LogHelper
             Common.LogHelper.WriteLog(filterContext.Exception.ToString());
         }
     }

@@ -1,6 +1,7 @@
 ﻿using MAP.OA.BLL;
 using MAP.OA.IBLL;
 using MAP.OA.Model;
+using MAP.OA.UI.Portal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
