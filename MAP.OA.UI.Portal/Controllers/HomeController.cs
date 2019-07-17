@@ -12,6 +12,11 @@ namespace MAP.OA.UI.Portal.Controllers
         // GET: Home
         public ActionResult Index()
         {
+
+            if (Session["loginUser"] == null)
+            {
+                return RedirectToAction("Index", "UserLogin");
+            }
             return View();
         }
     }

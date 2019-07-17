@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/10/2019 10:30:08
+-- Date Created: 07/17/2019 13:31:58
 -- Generated from EDMX file: D:\Ejer\Documents\visual studio 2015\Projects\MAP.OA\MAP.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,20 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_UserInfoOrderInfo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderInfo] DROP CONSTRAINT [FK_UserInfoOrderInfo];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[UserInfo]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserInfo];
+GO
+IF OBJECT_ID(N'[dbo].[OrderInfo]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderInfo];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -30,7 +39,11 @@ GO
 -- Creating table 'UserInfo'
 CREATE TABLE [dbo].[UserInfo] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL
+    [FirstName] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL,
+    [UserName] nvarchar(max)  NOT NULL,
+    [LastName] nvarchar(max)  NULL,
+    [DelFlag] smallint  NOT NULL
 );
 GO
 

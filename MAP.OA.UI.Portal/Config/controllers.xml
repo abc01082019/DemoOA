@@ -12,6 +12,10 @@
   <object type="MAP.OA.UI.Portal.Controllers.HomeController, MAP.OA.UI.Portal" singleton="false" >
   </object>
 
+  <object type="MAP.OA.UI.Portal.Controllers.UserLoginController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="UserInfoService" ref="UserInfoService" />
+  </object>
+
   <!--intentionally do NOT register the AccountController with the container; demonstrates that the underlying
   default controller factory will properly (attempt to!) resolve all controllers not registered with Spring.NET
   using its default controller resolution behavoir-->

@@ -18,7 +18,11 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DelFlag" Type="smallint" Nullable="false" DefaultValue="0" />
   </EntityType>
   <EntityType Name="OrderInfo">
     <Key>
@@ -57,8 +61,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="FirstName" Nullable="false" Type="String" />
           <NavigationProperty Name="OrderInfo" Relationship="DataModel.UserInfoOrderInfo" FromRole="UserInfo" ToRole="OrderInfo" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="true" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" DefaultValue="0" />
         </EntityType>
         <EntityType Name="OrderInfo">
           <Key>
@@ -91,7 +99,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(DataModel.UserInfo)">
         <MappingFragment StoreEntitySet="UserInfo">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

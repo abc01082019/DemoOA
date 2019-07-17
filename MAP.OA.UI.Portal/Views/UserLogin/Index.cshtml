@@ -1,0 +1,240 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    
+    <script type="text/javascript">
+        if (window.parent.window != window) {
+            window.top.location.href = "/UserLogin/CheckLogin";
+        }
+
+        $(function () {
+            //验证码图片被点击的时候改变
+            $("#imgValidationCode").click(changeValidationCode);
+        });
+        // 改变当前图片的地址, 点击后更改
+        function changeValidationCode() {
+            var old = $("#imgValidationCode").attr("src");
+            var now = new Date();
+            var str = old +
+                now.getDay() +
+                now.getMinutes() +
+                now.getSeconds();
+
+            $("#imgValidationCode").attr("src", str);
+        }
+
+        // 登入成功之后执行的方法
+        function AfterLogin(data) {
+            if (data == "OK") {
+                // 登入成功
+                window.top.location.href = "/Home/Index";
+            } else {
+                alert(data);
+                changeValidationCode();
+            }
+        }
+
+    </script>
+
+    <style type="text/css">
+        * {
+            padding: 0; 
+            margin: 0;
+        }
+        body {
+            text-align: center;
+            background: #4974A4;
+        }
+        #login {
+            width: 740px;
+            margin: 0 auto;
+            font-size: 12px;
+        }
+        #loginlogo {
+            width: 700px;
+            height: 100px;
+            overflow: hidden;
+            background: url('../../Content/Images/login/logo.png') no-repeat;
+            margin-top: 50px;
+        }
+        #loginpanel {
+            width: 729px;
+            position: relative;
+            height: 300px;
+        }
+        .panel-h {
+            width: 729px;
+            height: 20px;
+            background: url() no-repeat;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 3;
+        }
+        .panel-f {
+            width: 729px;
+            height: 13px;
+            background: url('../../Content/Images/login/yellow.jpg') no-repeat;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 3;
+        }
+        .panel-c {
+            width: 729px;
+            height: 300px;
+            background: url('../../Content/Images/login/blue.jpeg') repeat-y;
+            z-index: 2;
+        }
+        .panel-c-l {
+            position: absolute;
+            left: 60px;
+            top: 40px;
+        }
+        .panel-c-r {
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            width: 222px;
+            line-height: 200%;
+            text-align: left;
+        }
+        .panel-c-l h3 {
+            color: #556A85;
+            margin-bottom: 10px;
+        }
+        .panel-c-l td {
+            padding: 7px;
+        }
+        .login-text {
+            height: 24px;
+            left: 24px;
+            border: 1px solid #e9e9e9;
+            background: #f9f9f9;
+        }
+        .login-text-focus {
+            border: 1px solid #E6BF73;
+        }
+        .login-btn {
+            width: 114px;
+            height: 29px;
+            color: #E9FFFF;
+            line-height: 29px;
+            /*background: url('../../Content/Images/login/login-btn.gif') no-repeat;*/
+            background: url('../../Content/Images/login/grayBlue.jpg') no-repeat;
+            border: none;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        #txtUserName, #code, #txtPassword {
+            width: 191px;
+        }
+        #logincopyright {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+        }
+        a {
+            color: black;
+        }
+        a:hover {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body style="padding: 10px">
+    <div>
+
+        @using (Ajax.BeginForm("ProcessLogin", "UserLogin", new AjaxOptions()
+        {
+            OnSuccess = "AfterLogin"
+        }))
+        {
+            <div id="login"> 
+            <div id="loginlogo"></div>
+            <div id="loginpanel">
+                <div class="panel-h"></div>
+                <div class="panel-c">
+                    <div class="panel-c-l">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td align="left" colspan="2">
+                                        <h2>
+                                            请使用后台管理系统账号登入
+                                        </h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        账号:
+                                    </td>
+                                    <td>
+                                        <input type="text" name="LoginName" id="LoginName" class="login-text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        密码:
+                                    </td>
+                                    <td>
+                                        <input type="password" name="LoginPwd" id="LoginPwd" value="123" class="login-text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        验证码:
+                                    </td>
+                                    <td>
+                                        <input type="text" name="LoginValidationCode" id="LoginValidationCode" value="1" class="login-text"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <img id="imgValidationCode" src="/UserLogin/ShowValidationCode?id=1" style="float: left; height: 24px;" />
+                                        <div style="float: left; margin-left: 5px; margin-top: 10px;">
+                                            <a href="javascript:void(0)" onclick="changeValidationCode(); return false;">
+                                                看不清,下一张
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">
+                                        <input type="submit" id="btnLogin" value="登入" class="login-btn"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-c-r">
+                        <p> 请从左侧输入登入账号和密码登入 </p>
+                        <p> 如果遇到系统问题, 请联系网络管理员 </p>
+                        <p> 如果没有账号, 请联系网站管理员 </p>
+                        <p> ...... </p>
+                    </div>
+                </div>
+                <div class="panel-f"></div>
+            </div>
+            <div id="logincopyright">
+                Copyright 2019 ******.com
+            </div>
+        </div>
+        }
+    </div>
+</body>
+</html>

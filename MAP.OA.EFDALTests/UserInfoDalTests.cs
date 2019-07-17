@@ -33,9 +33,13 @@ namespace MAP.OA.EFDAL.Tests
             {
                 dal.Add(new UserInfo()
                 {
-                    Name = "testName" + i
+                    UserName = "userName" + i,
+                    FirstName = "firstName" + i,
+                    LastName = "lastName" + i,
+                    Password = "password" + i
                 });
             }
+            
 
             IQueryable<UserInfo> temp = dal.GetEntities(u => true);
 
