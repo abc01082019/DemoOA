@@ -1,0 +1,11 @@
+
+---------------------------------
+2019-07-18 00:33:09,531 [7] ERROR Demo [(null)] - System.Web.HttpException (0x80004005): Der kan ikke omdirigeres, når der er sendt HTTP-headere.
+   ved System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   ved System.Web.HttpResponseWrapper.Redirect(String url, Boolean endResponse)
+   ved System.Web.Mvc.RedirectToRouteResult.ExecuteResult(ControllerContext context)
+   ved System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   ved System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   ved System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   ved System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   ved System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

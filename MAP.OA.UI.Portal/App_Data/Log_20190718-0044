@@ -1,7 +1,11 @@
 
 ---------------------------------
-2019-07-17 14:55:50,245 [10] ERROR Demo [(null)] - System.Web.HttpCompileException (0x80004005): D:\Ejer\Documents\visual studio 2015\Projects\MAP.OA\MAP.OA.UI.Portal\Views\UserInfo\Index.cshtml(15): error CS1061: 'UserInfo' does not contain a definition for 'Name' and no extension method 'Name' accepting a first argument of type 'UserInfo' could be found (are you missing a using directive or an assembly reference?)
-   ved System.Web.Compilation.AssemblyBuilder.Compile()
+2019-07-18 00:44:23,098 [7] ERROR Demo [(null)] - System.Web.HttpParseException (0x80004005): Only one 'model' statement is allowed in a file.
+
+   ved System.Web.WebPages.Razor.RazorBuildProvider.EnsureGeneratedCode()
+   ved System.Web.WebPages.Razor.RazorBuildProvider.get_CodeCompilerType()
+   ved System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(BuildProvider buildProvider)
+   ved System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
    ved System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
    ved System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
    ved System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)

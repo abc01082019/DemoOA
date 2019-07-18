@@ -1,5 +1,6 @@
 ﻿using MAP.OA.Common;
 using MAP.OA.IBLL;
+using MAP.OA.UI.Portal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MAP.OA.UI.Portal.Controllers
 {
+    [LoginCheckFilter(ActivateCheck = false)]
     public class UserLoginController : Controller
     {
         public IUserInfoService UserInfoService { get; set; }

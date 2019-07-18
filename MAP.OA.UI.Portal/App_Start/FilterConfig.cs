@@ -13,13 +13,14 @@ namespace MAP.OA.UI.Portal.App_Start
         {
             //filters.Add(new HandleErrorAttribute());
 
+            // ActionFilter, ResultFilter, ExceptionFilter
 
-            //ActionFilter, ResultFilter, ExceptionFilter
-
-            //第三种filter: 异常过滤器
+            // 第三种filter: 异常过滤器
             // Add our own ExceptionFilter
             filters.Add(new MyExceptionFilter());
 
+            // Login check global method
+            //filters.Add(new LoginCheckFilterAttribute() { ActivateCheck = true });
 
         }
     }

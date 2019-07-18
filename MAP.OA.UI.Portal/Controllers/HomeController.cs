@@ -7,17 +7,13 @@ using System.Web.Mvc;
 
 namespace MAP.OA.UI.Portal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: Home
         public ActionResult Index()
         {
 
-            if (Session["loginUser"] == null)
-            {
-                return RedirectToAction("Index", "UserLogin");
-            }
-            return View();
+            return View(LoginUser);
         }
     }
 }
