@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Log
+MAP.OA.UI.Portal/App_Data/Log_*

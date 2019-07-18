@@ -73,7 +73,19 @@ namespace MAP.OA.UI.Portal.Controllers
                 return Content("Incorrect userName or password");
             }
 
-            Session["loginUser"] = userInfo;
+            //Session["loginUser"] = userInfo;
+
+            // Use memcache+cookie(distribute system) instead of Session(Session is slow and only work on one server)
+            // Assign immediately a flag: Guid. Store Guid as key in the mm and user-object as value in the mm.
+
+            // Generate a Guid
+            string userLoginId = Guid.NewGuid().ToString();
+
+            // write Guid to client's Cookie
+            Response.Cookies["userLoginId"].Value = userLoginId;
+
+            // Add client's data to mm. Need to solve a problem: we can store the data in the cache as Single or Distributed method
+            Common.Cache.CacheHelper.Addcache(userLoginId, userInfo, DateTime.Now.AddMinutes(20));
 
             // login successful
             return Content("OK");
