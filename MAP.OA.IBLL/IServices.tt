@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="EF.Utility.CS.ttinclude"#>
-<#@ output extension=".cs" #>
-<#
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#@ 
+ output extension=".cs"#><#
+
 var code = new CodeGenerationTools(this);
 var loader = new MetadataLoader(this);
 var region = new CodeRegion(this, 1);
@@ -16,16 +16,21 @@ var fileManager = EntityFrameworkTemplateFileManager.Create(this);
 
 #>
 using MAP.OA.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MAP.OA.IDAL
+namespace MAP.OA.IBLL
 {
 <#
 foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
 {
-#>
-	public partial interface I<#=entity.Name#>Dal : IBaseDal<<#=entity.Name#>>
+#>	
+	public interface I<#=entity.Name#>Service: IBaseService<<#=entity.Name#>>
 	{
 	}
 <#}#>
-
 }
+

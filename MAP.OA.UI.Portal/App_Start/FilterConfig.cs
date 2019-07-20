@@ -11,12 +11,13 @@ namespace MAP.OA.UI.Portal.App_Start
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            
             //filters.Add(new HandleErrorAttribute());
 
             // ActionFilter, ResultFilter, ExceptionFilter
 
             // 第三种filter: 异常过滤器
-            // Add our own ExceptionFilter
+            // Add our own ExceptionFilter, Write errors to our log
             filters.Add(new MyExceptionFilter());
 
             // Login check global method

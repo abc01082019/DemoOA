@@ -15,17 +15,16 @@ string namespaceName = code.VsNamespaceSuggestion();
 var fileManager = EntityFrameworkTemplateFileManager.Create(this);
 
 #>
-using MAP.OA.Model;
-
 namespace MAP.OA.IDAL
 {
-<#
-foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
-{
-#>
-	public partial interface I<#=entity.Name#>Dal : IBaseDal<<#=entity.Name#>>
+    public partial interface IDbSession
+    {
+	<#
+	foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
 	{
-	}
-<#}#>
-
+	#>
+		I<#=entity.Name#>Dal <#=entity.Name#>Dal { get; }
+	<#}#>
+        int SaveChanges();
+    }
 }

@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ include file="EF.Utility.CS.ttinclude"#>
-<#@ output extension=".cs" #>
-<#
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#@ 
+ output extension=".cs"#><#
+
 var code = new CodeGenerationTools(this);
 var loader = new MetadataLoader(this);
 var region = new CodeRegion(this, 1);
@@ -15,17 +15,18 @@ string namespaceName = code.VsNamespaceSuggestion();
 var fileManager = EntityFrameworkTemplateFileManager.Create(this);
 
 #>
+using MAP.OA.IBLL;
 using MAP.OA.Model;
 
-namespace MAP.OA.IDAL
+namespace MAP.OA.BLL
 {
 <#
 foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
 {
-#>
-	public partial interface I<#=entity.Name#>Dal : IBaseDal<<#=entity.Name#>>
-	{
-	}
+#>	
+    public class <#=entity.Name#>Service : BaseService<<#=entity.Name#>>, I<#=entity.Name#>Service
+    {
+    }
 <#}#>
-
 }
+
