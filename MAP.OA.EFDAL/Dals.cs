@@ -14,6 +14,10 @@ namespace MAP.OA.EFDAL
     {
     }
 
+    public partial class RoleInfoDal: BaseDal<RoleInfo>, IRoleInfoDal
+    {
+    }
+
     public partial class UserInfoDal: BaseDal<UserInfo>, IUserInfoDal
     {
     }

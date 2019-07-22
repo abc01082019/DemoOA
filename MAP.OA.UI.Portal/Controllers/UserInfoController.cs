@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MAP.OA.UI.Portal.Controllers
 {
-    public class UserInfoController : Controller
+    public class UserInfoController : BaseController
     {
         // GET: UserInfo
         //IUserInfoService UserInfoService = new UserInfoService(); // Spring.Net
@@ -19,6 +19,7 @@ namespace MAP.OA.UI.Portal.Controllers
         public ActionResult Index()
         {
             //throw new Exception("This is from UserInfoController..........................");
+            ViewBag.Model = LoginUser;
             return View(UserInfoService.GetEntities(u => true));
         }
 

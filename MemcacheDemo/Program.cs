@@ -30,7 +30,7 @@ namespace MemcacheDemo
             MemcachedClient mc = new Memcached.ClientLibrary.MemcachedClient();
             mc.EnableCompression = false;
 
-            mc.Add("key1", "This is my value");
+            mc.Add("key1", "This is my value", DateTime.Now.AddMinutes(20));
         }
     }
 }

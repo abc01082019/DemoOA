@@ -8,6 +8,7 @@
   <EntityContainer Name="DataModelStoreContainer">
     <EntitySet Name="UserInfo" EntityType="DataModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderInfo" EntityType="DataModel.Store.OrderInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleInfoSet" EntityType="DataModel.Store.RoleInfoSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserInfoOrderInfo" Association="DataModel.Store.UserInfoOrderInfo">
       <End Role="UserInfo" EntitySet="UserInfo" />
       <End Role="OrderInfo" EntitySet="OrderInfo" />
@@ -32,6 +33,12 @@
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserInfoId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="RoleInfoSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
   <Association Name="UserInfoOrderInfo">
     <End Role="UserInfo" Type="DataModel.Store.UserInfo" Multiplicity="1" />
     <End Role="OrderInfo" Type="DataModel.Store.OrderInfo" Multiplicity="*" />
@@ -55,6 +62,7 @@
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="OrderInfo" EntitySet="OrderInfo" />
           </AssociationSet>
+          <EntitySet Name="RoleInfoSet" EntityType="DataModel.RoleInfo" />
         </EntityContainer>
         <EntityType Name="UserInfo">
           <Key>
@@ -89,6 +97,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RoleInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -113,6 +127,13 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="UserInfoId" ColumnName="UserInfoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleInfoSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.RoleInfo)">
+        <MappingFragment StoreEntitySet="RoleInfoSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -27,5 +27,6 @@ namespace MAP.OA.Model
     
         public DbSet<UserInfo> UserInfo { get; set; }
         public DbSet<OrderInfo> OrderInfo { get; set; }
+        public DbSet<RoleInfo> RoleInfoSet { get; set; }
     }
 }

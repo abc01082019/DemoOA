@@ -155,13 +155,13 @@
     </style>
 </head>
 <body style="padding: 10px">
-                <div id="loginlogo"></div>
         @using (Ajax.BeginForm("ProcessLogin", "UserLogin", new AjaxOptions()
         {
             OnSuccess = "AfterLogin"
         }))
         {
             <div id="login"> 
+            <div id="loginlogo"></div>
                 <div id="loginpanel">
                     <div class="panel-h"></div>
                     <div class="panel-c">
@@ -232,6 +232,5 @@
                 </div>
             </div>
         }
-    </div>
 </body>
 </html>

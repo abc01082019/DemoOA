@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/17/2019 13:31:58
+-- Date Created: 07/21/2019 01:51:25
 -- Generated from EDMX file: D:\Ejer\Documents\visual studio 2015\Projects\MAP.OA\MAP.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -55,6 +55,12 @@ CREATE TABLE [dbo].[OrderInfo] (
 );
 GO
 
+-- Creating table 'RoleInfoSet'
+CREATE TABLE [dbo].[RoleInfoSet] (
+    [Id] int IDENTITY(1,1) NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -68,6 +74,12 @@ GO
 -- Creating primary key on [Id] in table 'OrderInfo'
 ALTER TABLE [dbo].[OrderInfo]
 ADD CONSTRAINT [PK_OrderInfo]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RoleInfoSet'
+ALTER TABLE [dbo].[RoleInfoSet]
+ADD CONSTRAINT [PK_RoleInfoSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

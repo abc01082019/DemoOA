@@ -15,10 +15,11 @@ namespace MAP.OA.Common.Cache
             //分布Memcachedf服务IP 端口
             //string[] servers = { "192.168.1.9:11211", "192.168.202.128:11211" };
 
-            // Get the servers setting from Web.config file
+            // Get the servers setting from 'Web.config' file
             string strAppMemcachedServer = System.Configuration.ConfigurationManager.AppSettings["MemcachedServerList"];
             string[] servers = strAppMemcachedServer.Split(',');
 
+            // Init Sock pool
             //初始化池
             SockIOPool pool = SockIOPool.GetInstance();
             pool.SetServers(servers);
@@ -31,9 +32,8 @@ namespace MAP.OA.Common.Cache
             pool.Failover = true;
             pool.Nagle = false;
             pool.Initialize();
-            
             //客户端实例
-            MemcachedClient mc = new Memcached.ClientLibrary.MemcachedClient();
+            memcacheClient = new Memcached.ClientLibrary.MemcachedClient();
             memcacheClient.EnableCompression = false;
         }
 
@@ -55,6 +55,16 @@ namespace MAP.OA.Common.Cache
         public T GetCache<T>(string key)
         {
             return (T)memcacheClient.Get(key);
+        }
+
+        public void SetCache(string key, object value, DateTime expDate)
+        {
+            memcacheClient.Set(key, value, expDate);
+        }
+
+        public void SetCache(string key, object value)
+        {
+            memcacheClient.Set(key, value);
         }
     }
 }

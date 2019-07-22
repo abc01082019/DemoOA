@@ -28,5 +28,17 @@ namespace MAP.OA.Common.Cache
         {
             return (T)HttpRuntime.Cache[key];
         }
+
+        public void SetCache(string key, object value, DateTime expDate)
+        {
+            HttpRuntime.Cache.Remove(key);
+            AddCache(key, value, expDate);
+        }
+
+        public void SetCache(string key, object value)
+        {
+            HttpRuntime.Cache.Remove(key);
+            AddCache(key, value);
+        }
     }
 }

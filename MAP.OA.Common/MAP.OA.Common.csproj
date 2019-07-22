@@ -36,11 +36,15 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\Memcached\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Memcached\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Memcached.ClientLibrary">
       <HintPath>..\packages\Memcached\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\packages\Spring.Net\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

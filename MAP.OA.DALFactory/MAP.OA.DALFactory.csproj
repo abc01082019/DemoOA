@@ -51,6 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbSession.cs" />
+    <Compile Include="DbSession1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbSession.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbSessionFactory.cs" />
     <Compile Include="StaticDalFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +87,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DbSession.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DbSession1.cs</LastGenOutput>
+    </Content>
     <Content Include="StaticDalFactory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StaticDalFactory1.cs</LastGenOutput>

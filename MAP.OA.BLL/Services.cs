@@ -8,6 +8,10 @@ namespace MAP.OA.BLL
     {
     }
 	
+    public class RoleInfoService : BaseService<RoleInfo>, IRoleInfoService
+    {
+    }
+	
     public class UserInfoService : BaseService<UserInfo>, IUserInfoService
     {
     }

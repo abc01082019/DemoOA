@@ -21,14 +21,35 @@ namespace MAP.OA.UI.Portal.Controllers
 
             if (ActivateCheck)
             {
-                if (filterContext.HttpContext.Session["loginUser"] == null)
+
+                // use memcache-Cookie instead of session
+                if (Request.Cookies["userLoginGuid"] == null)
                 {
                     filterContext.HttpContext.Response.Redirect("/UserLogin/Index");
                 }
-                else
+                string userGuid = Request.Cookies["userLoginGuid"].Value;
+                UserInfo userInfo = Common.Cache.CacheHelper.GetCache(userGuid) as UserInfo;
+
+                if (userInfo == null)
                 {
-                    LoginUser = filterContext.HttpContext.Session["loginUser"] as UserInfo;
+                    // The cache data is expired/overtime, please login again
+                    filterContext.HttpContext.Response.Redirect("/UserLogin/Index");
                 }
+                LoginUser = userInfo;
+                // Extend the cache time for 20 minutes
+                Common.Cache.CacheHelper.SetCache(userGuid, userInfo, DateTime.Now.AddMinutes(20));
+
+
+                #region Use Session for login check
+                //if (filterContext.HttpContext.Session["loginUser"] == null)
+                //{
+                //    filterContext.HttpContext.Response.Redirect("/UserLogin/Index");
+                //}
+                //else
+                //{
+                //    LoginUser = filterContext.HttpContext.Session["loginUser"] as UserInfo;
+                //}
+                #endregion
             }
         }
     }

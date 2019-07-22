@@ -12,6 +12,10 @@ namespace MAP.OA.IBLL
 	{
 	}
 	
+	public interface IRoleInfoService: IBaseService<RoleInfo>
+	{
+	}
+	
 	public interface IUserInfoService: IBaseService<UserInfo>
 	{
 	}

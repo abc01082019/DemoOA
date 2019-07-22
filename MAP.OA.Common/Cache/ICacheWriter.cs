@@ -15,5 +15,9 @@ namespace MAP.OA.Common.Cache
         object GetCache(string key);
 
         T GetCache<T>(string key);
+
+        void SetCache(string key, object value, DateTime expDate);
+
+        void SetCache(string key, object value);
     }
 }

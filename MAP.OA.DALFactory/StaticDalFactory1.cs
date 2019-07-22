@@ -17,6 +17,11 @@ namespace MAP.OA.DALFactory
 			return new OrderInfoDal();
 		}
 			
+		public static IRoleInfoDal _GetRoleInfoDal()
+		{
+			return new RoleInfoDal();
+		}
+			
 		public static IUserInfoDal _GetUserInfoDal()
 		{
 			return new UserInfoDal();
@@ -28,6 +33,11 @@ namespace MAP.OA.DALFactory
 		public static IOrderInfoDal GetOrderInfoDal()
 		{
 			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".OrderInfoDal") as IOrderInfoDal;
+		} 
+			
+		public static IRoleInfoDal GetRoleInfoDal()
+		{
+			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".RoleInfoDal") as IRoleInfoDal;
 		} 
 			
 		public static IUserInfoDal GetUserInfoDal()
