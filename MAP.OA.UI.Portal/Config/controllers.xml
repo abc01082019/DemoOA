@@ -1,21 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <objects xmlns="http://www.springframework.net">
 
-  <object type="MAP.OA.UI.Portal.Controllers.UserInfoController, MAP.OA.UI.Portal" singleton="false" >
-    <property name="UserInfoService" ref="UserInfoService" />
-  </object>
-
-  <object type="MAP.OA.UI.Portal.Controllers.OrderInfoController, MAP.OA.UI.Portal" singleton="false" >
-    <property name="OrderInfoService" ref="OrderInfoService" />
-  </object>
-
   <object type="MAP.OA.UI.Portal.Controllers.HomeController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="UserInfoService" ref="UserInfoService" />
+    <property name="ActionInfoService" ref="ActionInfoService" />
   </object>
 
   <object type="MAP.OA.UI.Portal.Controllers.UserLoginController, MAP.OA.UI.Portal" singleton="false" >
     <property name="UserInfoService" ref="UserInfoService" />
   </object>
 
+  <object type="MAP.OA.UI.Portal.Controllers.UserInfoController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="UserInfoService" ref="UserInfoService" />
+    <property name="RoleInfoService" ref="RoleInfoService" />
+    <property name="ActionInfoService" ref="ActionInfoService" />
+    <property name="R_UserInfo_ActionInfoService" ref="R_UserInfo_ActionInfoService" />
+  </object>
+
+  <object type="MAP.OA.UI.Portal.Controllers.OrderInfoController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="OrderInfoService" ref="OrderInfoService" />
+  </object>
+
+  <object type="MAP.OA.UI.Portal.Controllers.ActionInfoController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="ActionInfoService" ref="ActionInfoService" />
+    <property name="RoleInfoService" ref="RoleInfoService" />
+  </object>
+
+  <object type="MAP.OA.UI.Portal.Controllers.RoleInfoController, MAP.OA.UI.Portal" singleton="false" >
+    <property name="RoleInfoService" ref="RoleInfoService" />
+  </object>
+  
   <!--intentionally do NOT register the AccountController with the container; demonstrates that the underlying
   default controller factory will properly (attempt to!) resolve all controllers not registered with Spring.NET
   using its default controller resolution behavoir-->

@@ -11,7 +11,7 @@ namespace MAP.OA.Model.Enum
         /// <summary>
         /// standard status
         /// </summary>
-        Normal= 0,
+        Normal = 0,
         /// <summary>
         /// deleted status
         /// </summary>

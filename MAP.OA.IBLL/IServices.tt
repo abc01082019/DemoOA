@@ -28,7 +28,7 @@ namespace MAP.OA.IBLL
 foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
 {
 #>	
-	public interface I<#=entity.Name#>Service: IBaseService<<#=entity.Name#>>
+	public partial interface I<#=entity.Name#>Service: IBaseService<<#=entity.Name#>>
 	{
 	}
 <#}#>

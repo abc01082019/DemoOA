@@ -19,6 +19,8 @@ namespace MAP.OA.Model
         {
             this.DelFlag = 0;
             this.OrderInfo = new HashSet<OrderInfo>();
+            this.RoleInfo = new HashSet<RoleInfo>();
+            this.R_UserInfo_ActionInfo = new HashSet<R_UserInfo_ActionInfo>();
         }
     
         public int Id { get; set; }
@@ -26,8 +28,13 @@ namespace MAP.OA.Model
         public string Password { get; set; }
         public string UserName { get; set; }
         public string LastName { get; set; }
+        public string Remark { get; set; }
+        public System.DateTime ModifiedOn { get; set; }
+        public System.DateTime SubTime { get; set; }
         public short DelFlag { get; set; }
     
         public virtual ICollection<OrderInfo> OrderInfo { get; set; }
+        public virtual ICollection<RoleInfo> RoleInfo { get; set; }
+        public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
     }
 }

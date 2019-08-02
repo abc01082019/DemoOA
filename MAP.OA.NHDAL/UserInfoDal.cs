@@ -16,7 +16,17 @@ namespace MAP.OA.NHDAL
             throw new NotImplementedException();
         }
 
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(UserInfo entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteLogical(int id)
         {
             throw new NotImplementedException();
         }

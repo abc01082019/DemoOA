@@ -30,6 +30,8 @@ namespace MAP.OA.IDAL
 
         #region Delete
         bool Delete(T entity);
+        bool Delete(int id);
+        bool DeleteLogical(int id);
         #endregion
     }
 }

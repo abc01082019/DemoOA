@@ -15,9 +15,15 @@ namespace MAP.OA.Model
     [Serializable]
     public partial class OrderInfo
     {
+        public OrderInfo()
+        {
+            this.DelFlag = 0;
+        }
+    
         public int Id { get; set; }
         public string Content { get; set; }
         public int UserInfoId { get; set; }
+        public short DelFlag { get; set; }
     
         public virtual UserInfo UserInfo { get; set; }
     }

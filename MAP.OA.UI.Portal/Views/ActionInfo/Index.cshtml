@@ -1,0 +1,437 @@
+﻿
+@model MAP.OA.Model.ActionInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/jquery-easyui-1.8.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.8.2/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.8.2/jquery.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.8.2/jquery.easyui.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.8.2/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Content/jquery-easyui-1.8.2/locale/easyui-lang-en.js"></script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            initTable();
+
+            //hide the dialog when the page initialized
+            $("#addDialogDiv").css("display", "none");
+            $("#editDialogDiv").hide();
+            $("#trMenuIconUrl").hide();
+            $("#setRoleDialogDiv").hide();
+
+            // search asynchronous when the search button is click
+            bindSearchButtonClick();
+            // show the menuInfo when the IsMenu is set to 'true' 
+            bindShowHideToggleClick();
+            // when the image is uploaded
+            bindUploadButtonClick();
+        });
+
+        function initTable(queryParam) {
+            $('#tt').datagrid({
+                url: '/ActionInfo/GetAllActionInfos',
+                title: '权限信息列表',
+                width: 700,
+                height: 400,
+                fitColumns: true,
+                idField: 'Id',              //要和后台数据库Id一致
+                loadMsg: '正在加载权限信息...',
+                pagination: true,
+                singleSelect: false,
+                pageSize: 10,
+                pageNumber: 1,
+                pageList: [10, 20, 30],
+                queryParams: queryParam,    //exstra parameters when the datagrid is setup. Formatter: {key1 : value1, key2 : value2}
+                columns: [[
+                    //u.Id, u.ActionName, u.Url, u.HttpMethod, u.IsMenu, u.Sort, u.SubTime, u.ModifiedOn, u.MenuIcon
+                    { field: 'ck', checkbox: true, align: 'left', width: 80 },
+                    { field: 'Id', title: '权限编号', width: 80 },
+                    { field: 'ActionName', title: '权限名', width: 80 },
+                    { field: 'Url', title: '链接', width: 80 },
+                    { field: 'Sort', title: '排序', width: 80 },
+                    { field: 'HttpMethod', title: '发送方式', width: 80 },
+                    {
+                        field: 'IsMenu', title: '菜单', width: 80,
+                        formatter: function (value, row, index) {
+                            return value ? "yes" : "no";
+                        }
+                    },
+                    {
+                        field: 'MenuIcon', title: '图标', width: 80,
+                        formatter: function (value, row, index) {
+                            return "<img src='" + value + "' width='40px' height='40px' />"
+                        }
+                    },
+                    {
+                        field: 'SubTime', title: '提交时间', width: 80,
+                        //formatter: function (value, row, index) {
+                        //    return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($l)"))).pattern("yyyy-M-d h:m:s");
+                        //}
+                    },
+                    { field: 'Remark', title: '备注', width: 120 },
+                    {
+                        field: 'DelFlag', title: '操作', width: 120, formatter: function(value, row, index){
+                            var str = "";
+                            str += "<a href='javascript:void(0)' class='editLink' uid='" + row.Id + "'>edit</a> &nbsp;";
+                            str += "<a href='javascript:void(0)' class='deleteLink' uid='" + row.Id + "'>delete</a>";
+                            return str;
+                        }
+                    }
+                ]],
+                toolbar: [
+                    {
+                        id: 'btnAdd',
+                        text: 'new',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            addClickEvent();
+                        }
+                    },
+                    {
+                        id: 'btnDelete',
+                        text: 'delete',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            deleteClickEvent();
+                        }
+                    },
+                    {
+                        id: 'btnEdit',
+                        text: 'edit',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            // 检测是否选中一行数据
+                            var seletedRows = $('#tt').datagrid("getSelections");
+                            if (seletedRows.length != 1) {
+                                $.messager.alert("error", "please select exacly one row", "warning");
+                                return;
+                            }
+                            editClickEvent(seletedRows[0].Id);
+                        }
+                    },
+                    {
+                        id: 'btnSetRole',
+                        text: 'set role',
+                        iconCls: 'icon-redo',
+                        handler: function () {
+                            var seletedRows = $('#tt').datagrid("getSelections");
+                            if (seletedRows.length != 1) {
+                                $.messager.alert("error", "please select exacly one row", "warning");
+                                return;
+                            }
+                            setRoleClickEvent(seletedRows[0].Id);
+                        }
+                    }
+                ],
+                onHeaderContextMenu: function (e, field) {
+
+                },
+                // after data are loaded
+                onLoadSuccess: function (data) {
+                    $(".editLink").click(function () {
+                        var Id = $(this).attr("uid");
+                        editClickEvent(Id);
+                        return false;
+                    });
+
+                    $(".deleteLink").click(function () {
+                        var Id = $(this).attr("uid");
+                        $.post("/ActionInfo/Delete", { ids: [Id] }, function (data) {
+                            if (data == "ok") {
+                                initTable();
+                            } else {
+                                $.messager.alert("Message", "Failed", "error");
+                            }
+
+                        });
+                        return false;
+                    });
+                }
+
+            });
+        }
+
+        function setRoleClickEvent(Id) {
+            $("#setRoleFrame").attr("src", "/ActionInfo/SetRole/" + Id);
+
+            $("#setRoleDialogDiv").show();
+            $("#setRoleDialogDiv").dialog({
+                title: "设置角色",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+                buttons: [
+                    {
+                        id: 'btnOk',
+                        text: 'set',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            $("#setRoleFrame")[0].contentWindow.submitForm();
+                        }
+                    },
+                    {
+                        id: 'btnCancel',
+                        text: 'cancel',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            $("#setRoleDialogDiv").dialog("close");
+                        }
+                    }
+                ]
+
+            });
+        }
+
+        // closed Set-Role dialog and update the table
+        function afterSetRoleSuccess() {
+            $("#setRoleDialogDiv").dialog("close");
+            initTable();
+        }
+
+        function bindUploadButtonClick() {
+            $("#btnfileUpload").click(function () {
+                $("#addDialogDiv form").ajaxSubmit({
+                    url: "/ActionInfo/UploadImage",
+                    type: "Post",
+                    success: function (data) {
+                        $("#MenuIcon").val(data);
+                        $("#uploadedImg").html("<img src='" + data + "' style='width: 40px; height='40px'; />");
+                    }
+                });
+            });
+        }
+
+        function bindShowHideToggleClick() {
+            $("#IsMenu").click(function () {
+                //show/hidden
+                $("#trMenuIconUrl").toggle();
+            });
+        }
+
+        function bindSearchButtonClick() {
+            $("#btnSearch").click(function () {
+                var data = { srchName: $("#srchName").val(), srchRemark: $("#txtSrchRemark").val() };
+                initTable(data);
+            });
+        }
+
+        // edit a user
+        function editClickEvent(Id) {
+            // assign value to editFrame src attribute
+            $("#editFrame").attr("src", "/ActionInfo/Edit/" + Id);
+
+            $("#editDialogDiv").show();
+            $("#editDialogDiv").dialog({
+                title: "修改权限",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+                buttons: [
+                    {
+                        id: 'btnOk',
+                        text: 'save',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            $("#editFrame")[0].contentWindow.submitForm();
+                        }
+                    },
+                    {
+                        id: 'btnCancel',
+                        text: 'cancel',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            $("#editDialogDiv").dialog("close");
+                        }
+                    }
+                ]
+
+            });
+        }
+
+        // closed edit dialog and update the table
+        function afterEditSuccess() {
+            $("#editDialogDiv").dialog("close");
+            initTable();
+        }
+
+        // delete user(s)
+        function deleteClickEvent() {
+            // get the data which is selected
+            var seletedRows = $('#tt').datagrid("getSelections");
+            if (seletedRows.length <= 0) {
+                $.messager.alert("error", "please select at least one row", "warning");
+                return;
+            }
+
+            var ids = "";
+            // delete the data
+            // add all ids to a list
+            for (var key in seletedRows) {
+                ids = ids + seletedRows[key].Id + ',';
+            }
+            ids = ids.substr(0, ids.length -1);
+            $.post("/ActionInfo/Delete", { ids: ids }, function (data) {
+                if (data == "ok") {
+                    initTable();
+                } else {
+                    $.messager.alert("Message", "Failed", "error");
+                }
+
+            });
+            return;
+        }
+
+        // create a new dialog, when the 'new user'-button is clicked
+        function addClickEvent() {
+            $("#addDialogDiv").css("display", "block");
+            $("#addDialogDiv").dialog({
+                title: "添加权限",
+                modal: true,
+                width: 400,
+                height: 400,
+                collapsible: true,
+                minimizable: true,
+                maximizable: true,
+                resizable: true,
+                buttons: [
+                    {
+                        id: 'btnOk',
+                        text: 'ok',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            subAddForm();
+                        }
+                    },
+                    {
+                        id: 'btnCancel',
+                        text: 'cancel',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            $("#addDialogDiv").dialog("close");
+                        }
+                    }
+                ]
+
+            });
+        }
+
+        // transfer the table-data to Controller
+        function subAddForm() {
+            $("#addDialogDiv form").submit();
+        }
+
+        // executed after the page is successfully updated by using Ajax method
+        function afterAddSuccess(data) {
+            if (data == "ok") {
+                // closed dialog and update table
+                $("#addDialogDiv").dialog("close");
+                initTable();
+            } else {
+                $.messager.alert("add failed", data);
+            }
+
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <div>
+        权限名: <input type="text" id="srchName" name="txtSrchName" />
+        备注:   <input type="text" id="txtSrchRemark" name="txtSrchRemark" />
+        <input type="button" id="btnSearch" value="search" />
+    </div>
+
+    <!--当前页面存放数据的地方-->
+    <table id="tt" style="width: 700px;" title="标题可以使用代码进行初始化,也可以使用这用属性的方式" iconcls="icon-edit"></table>
+
+    <!----------------- 弹出添加的对话框 开始 ------------------>
+    <div id="addDialogDiv">
+        @using (Ajax.BeginForm("Add", "ActionInfo", new AjaxOptions()
+        {
+            HttpMethod = "Post",
+            OnSuccess = "afterAddSuccess"
+        }))
+        {
+            <table>
+                @*@Html.HiddenFor(u => u.Id)*@
+                <tr>
+                    <td>Action name:</td>
+                    <td>@Html.EditorFor(u=>u.ActionName, "")</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(u=>u.Url):</td>
+                    <td>@Html.EditorFor(u=>u.Url)</td>
+                </tr>
+                <tr>
+                    <td>Http method</td>
+                    <td>
+                        <select name="HttpMethod">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(u=>u.IsMenu)</td>
+                    <td>@Html.CheckBoxFor(u => u.IsMenu)</td>
+                </tr>
+                <tr id="trMenuIconUrl">
+                    <td>@Html.DisplayNameFor(u => u.MenuIcon)</td>
+                    <td>
+                        @Html.HiddenFor(u => u.MenuIcon)
+                        <input type="file" id="fileMenuIcon" name="fileMenuIcon" />
+                        <input type="button" id="btnfileUpload" value="upload" />
+                        <div id="uploadedImg">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(u => u.Sort)</td>
+                    <td>@Html.EditorFor(u => u.Sort)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(u => u.Remark):</td>
+                    <td>@Html.TextAreaFor(u=>u.Remark)</td>
+                </tr>
+            </table>
+        }
+
+    </div>
+    <!----------------- 弹出添加的对话框 结束 ------------------>
+    <!----------------- 弹出添加的对话框 开始 ------------------>
+    <div id="editDialogDiv">
+        <iframe id="editFrame" src="javascript:void(0)" frameborder="0" style="width:100%; height:100%" scrolling="no"></iframe>
+    </div>
+    <!----------------- 弹出添加的对话框 结束 ------------------>
+    <!----------------- 弹出设置角色的对话框 开始 ------------------>
+    <div id="setRoleDialogDiv">
+        <iframe id="setRoleFrame" src="javascript:void(0)" frameborder="0" style="width:100%; height:100%" scrolling="no"></iframe>
+    </div>
+    <!----------------- 弹出设置角色的对话框 结束 ------------------>
+
+</body>
+</html>
+
+

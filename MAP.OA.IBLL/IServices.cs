@@ -8,15 +8,27 @@ using System.Threading.Tasks;
 namespace MAP.OA.IBLL
 {
 	
-	public interface IOrderInfoService: IBaseService<OrderInfo>
+	public partial interface IActionInfoService: IBaseService<ActionInfo>
 	{
 	}
 	
-	public interface IRoleInfoService: IBaseService<RoleInfo>
+	public partial interface IOrderInfoService: IBaseService<OrderInfo>
 	{
 	}
 	
-	public interface IUserInfoService: IBaseService<UserInfo>
+	public partial interface IR_UserInfo_ActionInfoService: IBaseService<R_UserInfo_ActionInfo>
+	{
+	}
+	
+	public partial interface IRoleInfoService: IBaseService<RoleInfo>
+	{
+	}
+	
+	public partial interface IUserInfoService: IBaseService<UserInfo>
+	{
+	}
+	
+	public partial interface IUserInfoExtService: IBaseService<UserInfoExt>
 	{
 	}
 }

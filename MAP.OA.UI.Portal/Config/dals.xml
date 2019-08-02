@@ -20,4 +20,14 @@
   <object name ="OrderInfoDal" type="MAP.OA.EFDAL.OrderInfoDal, MAP.OA.EFDAL" singleton="false" >
   </object>
 
+  <object name ="ActionInfoDal" type="MAP.OA.EFDAL.ActionInfoDal, MAP.OA.EFDAL" singleton="false" >
+  </object>
+
+  <object name ="RoleInfoDal" type="MAP.OA.EFDAL.RoleInfoDal, MAP.OA.EFDAL" singleton="false" >
+  </object>
+
+  <object name ="R_UserInfo_ActionInfoDal" type="MAP.OA.EFDAL.R_UserInfo_ActionInfoDal, MAP.OA.EFDAL" singleton="false" >
+  </object>
+  
+
 </objects>

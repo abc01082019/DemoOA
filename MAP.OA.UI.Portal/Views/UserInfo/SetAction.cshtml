@@ -1,0 +1,102 @@
+﻿@using MAP.OA.Model
+@model IEnumerable<MAP.OA.Model.ActionInfo>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SetAction</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(":radio").click(function () {
+                $.post("/UserInfo/EditUserAction",
+                    { uId: $(this).attr("uId"), aId: $(this).attr("actionId"), value: $(this).val() },
+                    function (data) {
+                        if (data == "ok") {
+
+                        }
+                    });
+            });
+
+            $(".btnRemove").click(function () {
+                // do nothing if no buttons are checked
+                if ($(this).siblings(":radio").length > 0) {
+                    // removed row
+                    $.post("/UserInfo/DeleteUserAction",
+                        { uId: $(this).attr("uId"), aId: $(this).attr("actionId") },
+                        function (data) {
+                            if (data == "ok") {
+
+                            }
+                        });
+                }
+
+                // pass all checked button to backend
+                $(this).siblings(":radio").attr("checked", false);
+
+               
+            });
+        });
+
+        // called when edition is successful
+        function afterSetAction(data) {
+            if (data == "ok") {
+                window.parent.window.afterSetActionSuccess();
+            } else {
+                alert("set failed");
+            }
+        }
+
+        // submit the data to controller
+        function submitForm() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    @{ 
+        UserInfo userInfo = ViewBag.User;
+    }
+    <div> 
+        <h3>Set Action for: @userInfo.UserName</h3>
+        @using (Ajax.BeginForm(new AjaxOptions()
+        {
+            OnSuccess = "afterSetAction"
+        }))
+        {
+            <table>
+                @Html.HiddenFor(u => userInfo.Id)
+                <tr>
+                    <th>权限Id</th>
+                    <th>权限名</th>
+                    <th>权限地址</th>
+                    <th>权限方法</th>
+                    <th>操作</th>
+                </tr>
+                @foreach(var actionInfo in Model)
+                {
+                    string strId = "rb_" + actionInfo.Id;
+                    <tr>
+                        <td>@Html.DisplayFor(u => actionInfo.Id)</td>
+                        <td>@Html.DisplayFor(u => actionInfo.ActionName)</td>
+                        <td>@Html.DisplayFor(u => actionInfo.Url)</td>
+                        <td>@Html.DisplayFor(u => actionInfo.HttpMethod)</td>
+                        <td>
+                            @Html.RadioButton(strId, 1, new { uId = userInfo.Id, actionId = actionInfo.Id })set
+                            @Html.RadioButton(strId, 0, new { uId = userInfo.Id, actionId = actionInfo.Id })unset
+                            <input type="button" uId="@userInfo.Id" actionId="@actionInfo.Id" value="remove" class="btnRemove" id="btnRemove" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</body>
+</html>

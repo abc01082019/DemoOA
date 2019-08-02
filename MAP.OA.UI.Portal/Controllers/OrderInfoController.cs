@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MAP.OA.UI.Portal.Controllers
 {
-    public class OrderInfoController : Controller
+    public class OrderInfoController : BaseController
     {
         public IOrderInfoService OrderInfoService { get; set; }
 

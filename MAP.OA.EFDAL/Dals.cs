@@ -10,7 +10,15 @@ using System.Threading.Tasks;
 
 namespace MAP.OA.EFDAL
 {
+    public partial class ActionInfoDal: BaseDal<ActionInfo>, IActionInfoDal
+    {
+    }
+
     public partial class OrderInfoDal: BaseDal<OrderInfo>, IOrderInfoDal
+    {
+    }
+
+    public partial class R_UserInfo_ActionInfoDal: BaseDal<R_UserInfo_ActionInfo>, IR_UserInfo_ActionInfoDal
     {
     }
 
@@ -19,6 +27,10 @@ namespace MAP.OA.EFDAL
     }
 
     public partial class UserInfoDal: BaseDal<UserInfo>, IUserInfoDal
+    {
+    }
+
+    public partial class UserInfoExtDal: BaseDal<UserInfoExt>, IUserInfoExtDal
     {
     }
 

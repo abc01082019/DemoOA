@@ -31,6 +31,10 @@ namespace MAP.OA.IBLL
 
         #region Delete
         bool Delete(T entity);
+        bool Delete(int id);
+        int DeleteList(List<int> ids);
+        bool DeleteLogical(int id);
+        int DeleteListLogical(List<int> ids);
         #endregion
     }
 }

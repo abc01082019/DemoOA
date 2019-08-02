@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IActionInfoService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="IOrderInfoService.cs" />
+    <Compile Include="IRoleInfoService.cs" />
     <Compile Include="IServices.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

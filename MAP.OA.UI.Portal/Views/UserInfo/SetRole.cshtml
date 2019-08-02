@@ -1,0 +1,71 @@
+﻿
+@using MAP.OA.Model
+@model MAP.OA.Model.UserInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SetRole</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <script type="text/javascript">
+        // called when edition is successful
+        function afterSetRole(data) {
+            if (data == "ok") {
+                window.parent.window.afterSetRoleSuccess();
+            } else {
+                alert("set failed");
+            }
+        }
+
+        // submit the data to controller
+        function submitForm() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    @{
+        UserInfo userInfo = ViewBag.User;
+        List<RoleInfo> allRoles = ViewBag.AllRoles;
+        List<int> roleIds = ViewBag.UserRoleIds;
+    }
+        <div> 
+            <h3>The current user @userInfo.UserName</h3>
+            <hr />
+
+            @using (Ajax.BeginForm("SetRoleHandler", "UserInfo", new AjaxOptions()
+            {
+                OnSuccess = "afterSetRole"
+            }))
+            {
+                @Html.HiddenFor(u => userInfo.Id)
+                int i = 0;
+                foreach (RoleInfo roleInfo in allRoles)
+                {
+                    string str = "ckb_" + roleInfo.Id;
+                    if (i%3 == 0 && i != 0)
+                    {
+                        <hr />
+                    }
+                    if (roleIds.Contains(roleInfo.Id))
+                    {
+                        <input type="checkbox" checked="checked" name="@str" id="@str" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@str" id="@str" />
+                    }
+                    @Html.Label(roleInfo.RoleName)
+                    i++;
+                }
+            }
+        </div>
+</body>
+</html>

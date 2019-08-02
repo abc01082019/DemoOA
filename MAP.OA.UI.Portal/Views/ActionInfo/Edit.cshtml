@@ -1,0 +1,151 @@
+﻿@model MAP.OA.Model.ActionInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            if ($("#IsMenu").attr("checked") != "checked") {
+                $("#divMenuIconUrl").hide();
+            }
+            bindUploadButtonClick();
+            bindShowHideToggleClick();
+        });
+
+        // upload the image
+        function bindUploadButtonClick() {
+            $("#btnfileUpload").click(function () {
+                $("form").ajaxSubmit({
+                    url: "/ActionInfo/UploadImage",
+                    type: "Post",
+                    success: function (data) {
+                        $("#MenuIcon").val(data);
+                        $("#uploadedImg").html("<img src='" + data + "' style='width: 40px; height='40px'; />");
+                    }
+                });
+            });
+        }
+
+        // show and hide image URL when 'IsMenu'-button is clicked
+        function bindShowHideToggleClick() {
+
+            $("#IsMenu").click(function () {
+                //show/hidden
+                $("#divMenuIconUrl").toggle();
+            });
+        }
+
+        // called when edition is successful
+        function afterEdit(data) {
+            if (data == "ok") {
+                window.parent.window.afterEditSuccess();
+            } else {
+                alert("edit failed");
+            }
+        }
+
+        // submit the data to controller
+        function submitForm() {
+            $("form").submit();
+        }
+    </script>
+</head>
+<body>
+    @using (Ajax.BeginForm(new AjaxOptions() {
+        OnSuccess = "afterEdit"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>ActionInfo</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ModifiedOn)
+            @Html.HiddenFor(model => model.SubTime)
+            @Html.HiddenFor(model => model.DelFlag)
+    
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActionName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ActionName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ActionName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.HttpMethod, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HttpMethod, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HttpMethod, "", new { @class = "text-danger" })
+                </div>
+            </div>  
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsMenu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IsMenu, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsMenu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group" id="divMenuIconUrl">
+                @Html.LabelFor(model => model.MenuIcon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.MenuIcon, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MenuIcon, "", new { @class = "text-danger" })
+
+                    <input type="file" id="fileMenuIcon" name="fileMenuIcon" />
+                    <input type="button" id="btnfileUpload" value="upload" />
+                    <div id="uploadedImg">
+                        
+                        <img src=@Model.MenuIcon style="width:40px; height:40px;" />
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Sort, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Sort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Sort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

@@ -78,6 +78,37 @@ namespace MAP.OA.BLL
             CurrentDal.Delete(entity);
             return DbSession.SaveChanges() > 0;
         }
+
+        public bool Delete(int id)
+        {
+            CurrentDal.Delete(id);
+            return DbSession.SaveChanges() > 0;
+        }
+
+        public int DeleteList(List<int> ids)
+        {
+            foreach (var id in ids)
+            {
+                CurrentDal.Delete(id);
+            }
+            return DbSession.SaveChanges();
+        }
+
+        // Soft/logical delete
+        public bool DeleteLogical(int id)
+        {
+            CurrentDal.DeleteLogical(id);
+            return DbSession.SaveChanges() > 0;
+        }
+
+        public int DeleteListLogical(List<int> ids)
+        {
+            foreach (var id in ids)
+            {
+                CurrentDal.DeleteLogical(id);
+            }
+            return DbSession.SaveChanges();
+        }
         #endregion
     }
 }

@@ -24,7 +24,7 @@ namespace MAP.OA.BLL
 foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
 {
 #>	
-    public class <#=entity.Name#>Service : BaseService<<#=entity.Name#>>, I<#=entity.Name#>Service
+    public partial class <#=entity.Name#>Service : BaseService<<#=entity.Name#>>, I<#=entity.Name#>Service
     {
     }
 <#}#>

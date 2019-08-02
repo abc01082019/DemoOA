@@ -1,4 +1,5 @@
 ﻿using MAP.OA.Model;
+using MAP.OA.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -78,6 +79,21 @@ namespace MAP.OA.EFDAL
         {
             DbContent.Entry<T>(entity).State = System.Data.Entity.EntityState.Deleted;
             //return DbContent.SaveChanges() > 0;
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var entity = DbContent.Set<T>().Find(id);
+            DbContent.Set<T>().Remove(entity);
+            return true;
+        }
+
+        public bool DeleteLogical(int id)
+        {
+            var entity = DbContent.Set<T>().Find(id);
+            DbContent.Entry<T>(entity).Property("DelFlag").CurrentValue = (short)DelFlagEnum.Deleted;
+            DbContent.Entry<T>(entity).Property("DelFlag").IsModified = true;
             return true;
         }
         #endregion

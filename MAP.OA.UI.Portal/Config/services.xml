@@ -12,5 +12,20 @@
     <property name="CurrentDal" ref="OrderInfoDal" />
     <!--<constructor-arg index="0" ref="DbSession"/>-->
   </object>
+
+  <object name ="ActionInfoService" type="MAP.OA.BLL.ActionInfoService, MAP.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession" />
+    <property name="CurrentDal" ref="ActionInfoDal" />
+  </object>
+
+  <object name ="RoleInfoService" type="MAP.OA.BLL.RoleInfoService, MAP.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession" />
+    <property name="CurrentDal" ref="RoleInfoDal" />
+  </object>
   
+  <object name ="R_UserInfo_ActionInfoService" type="MAP.OA.BLL.R_UserInfo_ActionInfoService, MAP.OA.BLL" singleton="false" >
+    <property name="DbSession" ref="DbSession" />
+    <property name="CurrentDal" ref="R_UserInfo_ActionInfoDal" />
+  </object>
+
 </objects>
