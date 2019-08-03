@@ -70,22 +70,18 @@ namespace MAP.OA.UI.Portal.Controllers
                 }
 
                 // check if the current user has permission to the page with the httpmethod
-                //var rUAInfo = R_UserInfo_ActionInfoService.GetEntities(u => u.UserInfoId == LoginUser.Id && u.ActionInfoId == actionInfo.Id && u.DelFlag == (short)DelFlagEnum.Normal).FirstOrDefault();
-                var rUAInfo = R_UserInfo_ActionInfoService.GetEntities(u => u.UserInfoId == LoginUser.Id && u.DelFlag == (short)DelFlagEnum.Normal).ToList();
+                var rUAInfo = R_UserInfo_ActionInfoService.GetEntities(u => u.UserInfoId == LoginUser.Id && u.ActionInfoId == actionInfo.Id && u.DelFlag == (short)DelFlagEnum.Normal).FirstOrDefault();
 
-                var item = (from r in rUAInfo
-                            where r.ActionInfoId == actionInfo.Id
-                            select r).FirstOrDefault();
-                if (item != null)
+                if (rUAInfo != null)
                 {
-                    if (item.HasPermission == true)
+                    if (rUAInfo.HasPermission == true)
                         return;
                     else
                         Response.Redirect("/Error.html");
                 }
 
 
-                // 2
+                // 2 Check whether the user's corresponding role has this permission
                 var user = UserInfoService.GetEntities(u => u.Id == LoginUser.Id && u.DelFlag == (short)DelFlagEnum.Normal).FirstOrDefault();
 
                 // get all user roles
@@ -94,7 +90,7 @@ namespace MAP.OA.UI.Portal.Controllers
                 var actions = from r in allRoles
                               from a in r.ActionInfo
                               select a;
-                // check is there exists a role action that match the current action
+                // Detect if there is a role-action that matches the current action
                 var result = (from a in actions
                               where a.Id == actionInfo.Id
                               select a).Count();

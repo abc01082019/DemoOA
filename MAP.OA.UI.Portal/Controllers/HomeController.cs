@@ -28,7 +28,7 @@ namespace MAP.OA.UI.Portal.Controllers
             int userId = this.LoginUser.Id;
             // search and get the relational values
             var user = UserInfoService.GetEntities(u => u.Id == userId).FirstOrDefault();
-            // get all the actions for the current user
+            // get all the role-actions for the current user
             var allUserRole = user.RoleInfo;
             var allRoleActionIds = (from r in allUserRole
                                 from a in r.ActionInfo
@@ -37,17 +37,17 @@ namespace MAP.OA.UI.Portal.Controllers
             var allDenyActionsIds = (from r in user.R_UserInfo_ActionInfo
                                  where r.HasPermission == false
                                  select r.ActionInfoId).ToList();
-            // get all the confirm actions for the user
+            // get all the role-actions(without the deny actions) for the user
             var allCRoleActionIds = (from a in allRoleActionIds
                                      where !allDenyActionsIds.Contains(a)
                                      select a).ToList();
 
-            // get all the speacial confirm actions for the user
+            // get all the special confirm actions for the user
             var allActionIds = (from t in user.R_UserInfo_ActionInfo
                                    where t.HasPermission == true
                                    select t.ActionInfoId).ToList();
 
-            // merge all speacial action with all user.role.action for the current user
+            // merge all the speacial action with all the user.role.action for the current user
             allActionIds.AddRange(allCRoleActionIds.AsEnumerable());
             allActionIds = allActionIds.Distinct().ToList();
 

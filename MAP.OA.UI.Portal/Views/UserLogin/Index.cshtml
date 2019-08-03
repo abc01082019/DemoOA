@@ -15,8 +15,9 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     
     <script type="text/javascript">
+        // when the cache/login is out of time
         if (window.parent.window != window) {
-            window.top.location.href = "/UserLogin/CheckLogin";
+            window.top.location.href = "/UserLogin/Index";
         }
 
         $(function () {

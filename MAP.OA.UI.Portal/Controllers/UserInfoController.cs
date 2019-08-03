@@ -172,9 +172,10 @@ namespace MAP.OA.UI.Portal.Controllers
         }
         #endregion
 
-        #region Set Action
+        #region User Action
         public ActionResult SetAction(int Id)
         {
+            // TODO show all user-action that already set when we open the window
             UserInfo user = UserInfoService.GetEntities(u => u.Id == Id && u.DelFlag == (short)DelFlagEnum.Normal).FirstOrDefault();
             ViewBag.User = user;
 
@@ -197,12 +198,10 @@ namespace MAP.OA.UI.Portal.Controllers
                 }
             }
 
-            //TODO : fix to set special Action
-            //UserInfoService.SetAction(userInfo.Id, actionIDs);
+            //TODO : give a response (ajax) when a aciton is set
 
             return Content("ok");
         }
-        #endregion
 
         public ActionResult DeleteUserAction(int uId, int aId)
         {
@@ -241,5 +240,7 @@ namespace MAP.OA.UI.Portal.Controllers
             }
             return Content("ok");
         }
+        #endregion
+
     }
 }

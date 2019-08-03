@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # Log
 MAP.OA.UI.Portal/App_Data/Log_*
+
+#Nhibernate
+NhDemo/*
