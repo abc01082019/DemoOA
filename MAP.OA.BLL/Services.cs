@@ -8,6 +8,10 @@ namespace MAP.OA.BLL
     {
     }
 	
+    public partial class FileInfoService : BaseService<FileInfo>, IFileInfoService
+    {
+    }
+	
     public partial class OrderInfoService : BaseService<OrderInfo>, IOrderInfoService
     {
     }
@@ -25,6 +29,18 @@ namespace MAP.OA.BLL
     }
 	
     public partial class UserInfoExtService : BaseService<UserInfoExt>, IUserInfoExtService
+    {
+    }
+	
+    public partial class WF_InstanceService : BaseService<WF_Instance>, IWF_InstanceService
+    {
+    }
+	
+    public partial class WF_ProcedureService : BaseService<WF_Procedure>, IWF_ProcedureService
+    {
+    }
+	
+    public partial class WF_TempService : BaseService<WF_Temp>, IWF_TempService
     {
     }
 }

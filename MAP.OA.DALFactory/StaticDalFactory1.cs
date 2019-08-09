@@ -17,6 +17,11 @@ namespace MAP.OA.DALFactory
 			return new ActionInfoDal();
 		}
 			
+		public static IFileInfoDal _GetFileInfoDal()
+		{
+			return new FileInfoDal();
+		}
+			
 		public static IOrderInfoDal _GetOrderInfoDal()
 		{
 			return new OrderInfoDal();
@@ -41,6 +46,21 @@ namespace MAP.OA.DALFactory
 		{
 			return new UserInfoExtDal();
 		}
+			
+		public static IWF_InstanceDal _GetWF_InstanceDal()
+		{
+			return new WF_InstanceDal();
+		}
+			
+		public static IWF_ProcedureDal _GetWF_ProcedureDal()
+		{
+			return new WF_ProcedureDal();
+		}
+			
+		public static IWF_TempDal _GetWF_TempDal()
+		{
+			return new WF_TempDal();
+		}
 	
 		public static string assemblyName = System.Configuration.ConfigurationManager.AppSettings["DalAssemblyName"];
 
@@ -48,6 +68,11 @@ namespace MAP.OA.DALFactory
 		public static IActionInfoDal GetActionInfoDal()
 		{
 			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".ActionInfoDal") as IActionInfoDal;
+		} 
+			
+		public static IFileInfoDal GetFileInfoDal()
+		{
+			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".FileInfoDal") as IFileInfoDal;
 		} 
 			
 		public static IOrderInfoDal GetOrderInfoDal()
@@ -73,6 +98,21 @@ namespace MAP.OA.DALFactory
 		public static IUserInfoExtDal GetUserInfoExtDal()
 		{
 			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".UserInfoExtDal") as IUserInfoExtDal;
+		} 
+			
+		public static IWF_InstanceDal GetWF_InstanceDal()
+		{
+			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".WF_InstanceDal") as IWF_InstanceDal;
+		} 
+			
+		public static IWF_ProcedureDal GetWF_ProcedureDal()
+		{
+			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".WF_ProcedureDal") as IWF_ProcedureDal;
+		} 
+			
+		public static IWF_TempDal GetWF_TempDal()
+		{
+			return Assembly.Load(assemblyName).CreateInstance(assemblyName + ".WF_TempDal") as IWF_TempDal;
 		} 
 	
 	}

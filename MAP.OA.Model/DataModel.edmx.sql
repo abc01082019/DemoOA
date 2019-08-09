@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/01/2019 13:16:35
+-- Date Created: 08/07/2019 01:05:33
 -- Generated from EDMX file: D:\Ejer\Documents\visual studio 2015\Projects\MAP.OA\MAP.OA.Model\DataModel.edmx
 -- --------------------------------------------------
 
@@ -38,6 +38,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ActionInfoR_UserInfo_ActionInfo]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[R_UserInfo_ActionInfo] DROP CONSTRAINT [FK_ActionInfoR_UserInfo_ActionInfo];
 GO
+IF OBJECT_ID(N'[dbo].[FK_WF_InstanceFileInfo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[FileInfo] DROP CONSTRAINT [FK_WF_InstanceFileInfo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_WF_TempWF_Instance]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Wf_Instance] DROP CONSTRAINT [FK_WF_TempWF_Instance];
+GO
+IF OBJECT_ID(N'[dbo].[FK_WF_InstanceWF_Procedure]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[WF_Procedure] DROP CONSTRAINT [FK_WF_InstanceWF_Procedure];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -60,6 +69,18 @@ IF OBJECT_ID(N'[dbo].[UserInfoExt]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[R_UserInfo_ActionInfo]', 'U') IS NOT NULL
     DROP TABLE [dbo].[R_UserInfo_ActionInfo];
+GO
+IF OBJECT_ID(N'[dbo].[Wf_Temp]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Wf_Temp];
+GO
+IF OBJECT_ID(N'[dbo].[Wf_Instance]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Wf_Instance];
+GO
+IF OBJECT_ID(N'[dbo].[FileInfo]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[FileInfo];
+GO
+IF OBJECT_ID(N'[dbo].[WF_Procedure]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[WF_Procedure];
 GO
 IF OBJECT_ID(N'[dbo].[UserInfoRoleInfo]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserInfoRoleInfo];
@@ -143,6 +164,67 @@ CREATE TABLE [dbo].[R_UserInfo_ActionInfo] (
 );
 GO
 
+-- Creating table 'Wf_Temp'
+CREATE TABLE [dbo].[Wf_Temp] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [TempName] nvarchar(max)  NOT NULL,
+    [Decription] nvarchar(max)  NOT NULL,
+    [TempForm] nvarchar(max)  NOT NULL,
+    [Remark] nvarchar(max)  NULL,
+    [SubTime] datetime  NOT NULL,
+    [DelFlag] smallint  NOT NULL,
+    [ActivityType] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Wf_Instance'
+CREATE TABLE [dbo].[Wf_Instance] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [InstanceName] nvarchar(max)  NOT NULL,
+    [SenderId] int  NOT NULL,
+    [StartTime] datetime  NOT NULL,
+    [Level] smallint  NOT NULL,
+    [Content] nvarchar(max)  NULL,
+    [Remark] nvarchar(max)  NULL,
+    [DelFlag] smallint  NOT NULL,
+    [FilePath] nvarchar(max)  NOT NULL,
+    [WFInstanceId] uniqueidentifier  NOT NULL,
+    [WF_TempId] int  NOT NULL,
+    [Status] smallint  NOT NULL
+);
+GO
+
+-- Creating table 'FileInfo'
+CREATE TABLE [dbo].[FileInfo] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [FileName] nvarchar(max)  NOT NULL,
+    [FileType] nvarchar(max)  NULL,
+    [FilePath] nvarchar(max)  NULL,
+    [FileSize] nvarchar(max)  NULL,
+    [Remark] nvarchar(max)  NULL,
+    [SubTime] datetime  NOT NULL,
+    [DelFlag] smallint  NOT NULL,
+    [WF_InstanceId] int  NULL
+);
+GO
+
+-- Creating table 'WF_Procedure'
+CREATE TABLE [dbo].[WF_Procedure] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [ProcedureName] nvarchar(max)  NOT NULL,
+    [HandleBy] int  NOT NULL,
+    [SubTime] datetime  NOT NULL,
+    [ProcessTime] datetime  NOT NULL,
+    [ProcessResult] nvarchar(max)  NOT NULL,
+    [ProcessComment] nvarchar(max)  NOT NULL,
+    [ProcessStatus] smallint  NOT NULL,
+    [IsStartProcedure] bit  NOT NULL,
+    [IsEndProcedure] bit  NOT NULL,
+    [ParentProcedureId] nvarchar(max)  NOT NULL,
+    [WF_InstanceId] int  NOT NULL
+);
+GO
+
 -- Creating table 'UserInfoRoleInfo'
 CREATE TABLE [dbo].[UserInfoRoleInfo] (
     [UserInfo_Id] int  NOT NULL,
@@ -194,6 +276,30 @@ GO
 -- Creating primary key on [Id] in table 'R_UserInfo_ActionInfo'
 ALTER TABLE [dbo].[R_UserInfo_ActionInfo]
 ADD CONSTRAINT [PK_R_UserInfo_ActionInfo]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Wf_Temp'
+ALTER TABLE [dbo].[Wf_Temp]
+ADD CONSTRAINT [PK_Wf_Temp]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Wf_Instance'
+ALTER TABLE [dbo].[Wf_Instance]
+ADD CONSTRAINT [PK_Wf_Instance]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'FileInfo'
+ALTER TABLE [dbo].[FileInfo]
+ADD CONSTRAINT [PK_FileInfo]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'WF_Procedure'
+ALTER TABLE [dbo].[WF_Procedure]
+ADD CONSTRAINT [PK_WF_Procedure]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -304,6 +410,51 @@ GO
 CREATE INDEX [IX_FK_ActionInfoR_UserInfo_ActionInfo]
 ON [dbo].[R_UserInfo_ActionInfo]
     ([ActionInfoId]);
+GO
+
+-- Creating foreign key on [WF_InstanceId] in table 'FileInfo'
+ALTER TABLE [dbo].[FileInfo]
+ADD CONSTRAINT [FK_WF_InstanceFileInfo]
+    FOREIGN KEY ([WF_InstanceId])
+    REFERENCES [dbo].[Wf_Instance]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_WF_InstanceFileInfo'
+CREATE INDEX [IX_FK_WF_InstanceFileInfo]
+ON [dbo].[FileInfo]
+    ([WF_InstanceId]);
+GO
+
+-- Creating foreign key on [WF_TempId] in table 'Wf_Instance'
+ALTER TABLE [dbo].[Wf_Instance]
+ADD CONSTRAINT [FK_WF_TempWF_Instance]
+    FOREIGN KEY ([WF_TempId])
+    REFERENCES [dbo].[Wf_Temp]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_WF_TempWF_Instance'
+CREATE INDEX [IX_FK_WF_TempWF_Instance]
+ON [dbo].[Wf_Instance]
+    ([WF_TempId]);
+GO
+
+-- Creating foreign key on [WF_InstanceId] in table 'WF_Procedure'
+ALTER TABLE [dbo].[WF_Procedure]
+ADD CONSTRAINT [FK_WF_InstanceWF_Procedure]
+    FOREIGN KEY ([WF_InstanceId])
+    REFERENCES [dbo].[Wf_Instance]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_WF_InstanceWF_Procedure'
+CREATE INDEX [IX_FK_WF_InstanceWF_Procedure]
+ON [dbo].[WF_Procedure]
+    ([WF_InstanceId]);
 GO
 
 -- --------------------------------------------------

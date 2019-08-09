@@ -1,0 +1,58 @@
+﻿
+@using MAP.OA.Model
+@model MAP.OA.Model.WF_Instance
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+    </script>
+
+</head>
+<body>
+    <div> 
+        @{ 
+            WF_Temp temp = ViewBag.Temp;
+        }
+        @using (Ajax.BeginForm(new AjaxOptions() {}))
+        {
+            <table>
+                <tr>
+                    <td>@Html.LabelFor(u => temp.TempName, "流程类型")</td>
+                    <td>@Html.DisplayFor(u => temp.TempName)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(u => temp.TempForm, "模板")</td>
+                    <td>@Html.DisplayFor(u => temp.TempForm)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(u => temp.Decription, "描述")</td>
+                    <td>@Html.DisplayFor(u => temp.Decription)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(u => u.InstanceName, "流程名")</td>
+                    <td>@Html.EditorFor(u=>u.InstanceName)</td>
+                </tr>
+                <tr>
+                    <td>流转到:</td>
+                    <td>@Html.DropDownList("flowTo")</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(u => u.Content, "申请内容")</td>
+                    <td>@Html.TextAreaFor(u => u.Content, 20, 60, new { @Value = "some values" })</td>
+                </tr>
+            </table>
+            <input type="submit" value="Send" />
+        }
+
+    </div>
+</body>
+</html>

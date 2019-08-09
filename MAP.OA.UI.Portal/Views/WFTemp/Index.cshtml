@@ -1,10 +1,10 @@
-﻿
-@model MAP.OA.Model.RoleInfo
+﻿@model MAP.OA.Model.WF_Temp
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
+
 
 <html>
 <head>
@@ -34,13 +34,13 @@
 
         function initTable(queryParam) {
             $('#tt').datagrid({
-                url: '/RoleInfo/GetAllRoleInfos',
-                title: '角色信息列表',
+                url: '/WFTemp/GetAllWFTemps',
+                title: '流程模板信息列表',
                 width: 700,
                 height: 400,
                 fitColumns: true,
                 idField: 'Id',              //要和后台数据库Id一致
-                loadMsg: '正在加载角色信息...',
+                loadMsg: '正在加载流程模板信息...',
                 pagination: true,
                 singleSelect: false,
                 pageSize: 10,
@@ -48,10 +48,10 @@
                 pageList: [10, 20, 30],
                 queryParams: queryParam,    //exstra parameters when the datagrid is setup. Formatter: {key1 : value1, key2 : value2}
                 columns: [[
-                    // u.Id, u.RoleName, u.ModifiedOn, u.SubTime, u.Remark
+                    //  u.Id, u.TempName, u.Decription, u.TempForm, u.Remark, u.SubTime, u.ActivityType, u.DelFlag
                     { field: 'ck', checkbox: true, align: 'left', width: 80 },
-                    { field: 'Id', title: '角色编号', width: 80 },
-                    { field: 'RoleName', title: '角色名', width: 80 },
+                    { field: 'Id', title: '流程模板编号', width: 80 },
+                    { field: 'TempName', title: '流程模板名', width: 80 },
                     {
                         field: 'SubTime', title: '提交时间', width: 80,
                         //formatter: function (value, row, index) {
@@ -60,12 +60,13 @@
                     },
                     { field: 'Remark', title: '备注', width: 120 },
                     {
-                        field: 'DelFlag', title: '操作', width: 120, formatter: function(value, row, index){
-                            var str = "";
-                            str += "<a href='javascript:void(0)' class='editLink' uid='" + row.Id + "'>edit</a> &nbsp;";
-                            str += "<a href='javascript:void(0)' class='deleteLink' uid='" + row.Id + "'>delete</a>";
-                            return str;
-                        }
+                        field: 'DelFlag', title: '操作', width: 120, formatter:
+                            function (value, row, index) {
+                                var str = "";
+                                str += "<a href='javascript:void(0)' class='editLink' uid='" + row.Id + "'>edit</a> &nbsp;";
+                                str += "<a href='javascript:void(0)' class='deleteLink' uid='" + row.Id + "'>delete</a>";
+                                return str;
+                            }
                     }
                 ]],
                 toolbar: [
@@ -103,7 +104,7 @@
                 onHeaderContextMenu: function (e, field) {
 
                 },
-                // after data are loaded
+                // After data are loaded
                 onLoadSuccess: function (data) {
                     $(".editLink").click(function () {
                         var Id = $(this).attr("uid");
@@ -113,7 +114,7 @@
 
                     $(".deleteLink").click(function () {
                         var Id = $(this).attr("uid");
-                        $.post("/RoleInfo/Delete", { ids: [Id] }, function (data) {
+                        $.post("/WFTemp/Delete", { ids: [Id] }, function (data) {
                             if (data == "ok") {
                                 initTable();
                             } else {
@@ -136,14 +137,14 @@
             });
         }
 
-        // edit a user
+        // Edit a user
         function editClickEvent(Id) {
             // assign value to editFrame src attribute
-            $("#editFrame").attr("src", "/RoleInfo/Edit/" + Id);
+            $("#editFrame").attr("src", "/WFTemp/Edit/" + Id);
 
             $("#editDialogDiv").show();
             $("#editDialogDiv").dialog({
-                title: "修改角色",
+                title: "修改流程模板",
                 modal: true,
                 width: 400,
                 height: 400,
@@ -173,13 +174,13 @@
             });
         }
 
-        // closed edit dialog and update the table
+        // Closed edit dialog and update the table
         function afterEditSuccess() {
             $("#editDialogDiv").dialog("close");
             initTable();
         }
 
-        // delete user(s)
+        // Delete user(s)
         function deleteClickEvent() {
             // get the data which is selected
             var seletedRows = $('#tt').datagrid("getSelections");
@@ -195,9 +196,9 @@
                 ids = ids + seletedRows[key].Id + ',';
             }
             ids = ids.substr(0, ids.length -1);
-            $.post("/RoleInfo/Delete", { ids: ids }, function (data) {
+            $.post("/WFTemp/Delete", { ids: ids }, function (data) {
                 if (data == "ok") {
-                    initTable();
+                    $('#tt').datagrid("reload");
                 } else {
                     $.messager.alert("Message", "Failed", "error");
                 }
@@ -206,12 +207,15 @@
             return;
         }
 
-        // create a new dialog, when the 'new user'-button is clicked
+        // Create a new dialog, when the 'new user'-button is clicked
         function addClickEvent() {
+
+            // Modify the src attribute
+            $("#addFrame").attr("src", "/WFTemp/Add");
+
             $("#addDialogDiv").css("display", "block");
             $("#addDialogDiv").dialog({
-                title: "添加角色",
-                modal: true,
+                title: "添加流程模板",
                 width: 400,
                 height: 400,
                 collapsible: true,
@@ -224,7 +228,7 @@
                         text: 'ok',
                         iconCls: 'icon-ok',
                         handler: function () {
-                            subAddForm();
+                            $("#addFrame")[0].contentWindow.submitForm();
                         }
                     },
                     {
@@ -240,15 +244,21 @@
             });
         }
 
-        // transfer the table-data to Controller
+        // Closed add dialog and reload the table
+        function afterAddedSuccess() {
+            $("#addDialogDiv").dialog("close");
+            $('#tt').datagrid("reload");
+        }
+
+        // Transfer the table-data to Controller
         function subAddForm() {
             $("#addDialogDiv form").submit();
         }
 
-        // executed after the page is successfully updated by using Ajax method
+        // Executed after the page is successfully updated by using Ajax method
         function afterAddSuccess(data) {
             if (data == "ok") {
-                // closed dialog and update table
+                // Closed dialog and update table
                 $("#addDialogDiv").dialog("close");
                 initTable();
             } else {
@@ -263,7 +273,7 @@
 <body>
 
     <div>
-        角色名: <input type="text" id="srchName" name="txtSrchName" />
+        流程模板名: <input type="text" id="srchName" name="txtSrchName" />
         备注:   <input type="text" id="txtSrchRemark" name="txtSrchRemark" />
         <input type="button" id="btnSearch" value="search" />
     </div>
@@ -273,32 +283,14 @@
 
     <!----------------- 弹出添加的对话框 开始 ------------------>
     <div id="addDialogDiv">
-        @using (Ajax.BeginForm("Add", "RoleInfo", new AjaxOptions()
-        {
-            HttpMethod = "Post",
-            OnSuccess = "afterAddSuccess"
-        }))
-        {
-            <table>
-                <tr>
-                    <td>Role name:</td>
-                    <td>@Html.EditorFor(u => u.RoleName, "")</td>
-                </tr>
-                <tr>
-                    <td>@Html.DisplayNameFor(u => u.Remark):</td>
-                    <td>@Html.TextAreaFor(u => u.Remark)</td>
-                </tr>
-            </table>
-        }
-
+        <iframe id="addFrame" src="javascript:void(0)" frameborder="0" style="width:100%; height:99%;"></iframe>
     </div>
     <!----------------- 弹出添加的对话框 结束 ------------------>
     <!----------------- 弹出添加的对话框 开始 ------------------>
     <div id="editDialogDiv">
-        <iframe id="editFrame" src="javascript:void(0)" frameborder="0" style="width:100%; height:99%" scrolling="yes"></iframe>
+        <iframe id="editFrame" src="javascript:void(0)" frameborder="0" style="width:100%; height:99%;"></iframe>
     </div>
     <!----------------- 弹出添加的对话框 结束 ------------------>
 
 </body>
 </html>
-

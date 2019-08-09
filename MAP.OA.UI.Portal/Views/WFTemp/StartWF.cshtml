@@ -1,0 +1,45 @@
+﻿
+@model IQueryable<MAP.OA.Model.WF_Temp>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StartWF</title>
+    <link href="~/Content/jquery-easyui-1.8.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.8.2/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.8.2/jquery.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.8.2/jquery.easyui.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.8.2/locale/easyui-lang-en.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // monitor all button, trigger an event when a button is activated
+            $(":button").click(function () {
+                $(this).val("hello");
+            });
+
+            $(":text").val("this is text");
+        });
+
+    </script>
+</head>
+<body>
+    <div> 
+        @{
+            foreach (var temp in Model)
+            {
+                <a id="add" href="/WFInstance/Add/@temp.Id" class="easyui-linkbutton" data-options="iconCls:'icon-add'">@temp.TempName</a>
+                <br />
+                <input type="button" id="@temp.Id" value="nothing" name="tempId" />
+
+                <input type="text" id="@temp.Id" value="nothing" name="tempId" />
+            }
+
+        }
+    </div>
+</body>
+</html>

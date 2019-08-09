@@ -17,6 +17,11 @@ namespace MAP.OA.DALFactory
             get { return StaticDalFactory.GetActionInfoDal(); }
         } 
 	
+		public IFileInfoDal FileInfoDal
+        {
+            get { return StaticDalFactory.GetFileInfoDal(); }
+        } 
+	
 		public IOrderInfoDal OrderInfoDal
         {
             get { return StaticDalFactory.GetOrderInfoDal(); }
@@ -40,6 +45,21 @@ namespace MAP.OA.DALFactory
 		public IUserInfoExtDal UserInfoExtDal
         {
             get { return StaticDalFactory.GetUserInfoExtDal(); }
+        } 
+	
+		public IWF_InstanceDal WF_InstanceDal
+        {
+            get { return StaticDalFactory.GetWF_InstanceDal(); }
+        } 
+	
+		public IWF_ProcedureDal WF_ProcedureDal
+        {
+            get { return StaticDalFactory.GetWF_ProcedureDal(); }
+        } 
+	
+		public IWF_TempDal WF_TempDal
+        {
+            get { return StaticDalFactory.GetWF_TempDal(); }
         } 
 	
 		public int SaveChanges()

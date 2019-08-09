@@ -246,3 +246,5 @@ MAP.OA.UI.Portal/App_Data/Log_*
 
 #Nhibernate
 NhDemo/*
+NhDemo2/*
+NhibernateDemoApp/*

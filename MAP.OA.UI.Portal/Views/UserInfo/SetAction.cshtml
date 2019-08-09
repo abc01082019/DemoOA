@@ -15,6 +15,7 @@
 
     <script type="text/javascript">
         $(function () {
+            // when a radio button is clicked (Monitor all)
             $(":radio").click(function () {
                 $.post("/UserInfo/EditUserAction",
                     { uId: $(this).attr("uId"), aId: $(this).attr("actionId"), value: $(this).val() },
@@ -25,10 +26,11 @@
                     });
             });
 
+            // when a remove button is clicked (Monitor all)
             $(".btnRemove").click(function () {
                 // do nothing if no buttons are checked
                 if ($(this).siblings(":radio").length > 0) {
-                    // removed row
+                    // pass all checked button to backend
                     $.post("/UserInfo/DeleteUserAction",
                         { uId: $(this).attr("uId"), aId: $(this).attr("actionId") },
                         function (data) {
@@ -38,10 +40,16 @@
                         });
                 }
 
-                // pass all checked button to backend
+                // reset all redio button to false in this row
                 $(this).siblings(":radio").attr("checked", false);
 
                
+            });
+
+            $(".test").click(function () {
+                alert($(this).siblings(":radio").length);
+                $(this).siblings(":radio").css("background", "yellow");
+                $(".test").css("background", "yellow");
             });
         });
 
@@ -65,6 +73,12 @@
         UserInfo userInfo = ViewBag.User;
     }
     <div> 
+        <p>
+            <input actionId="9" id="rb_1" name="rb_9" type="radio" uId="1" value="1" />set
+            <input actionId="9" id="rb_1" name="rb_9" type="radio" uId="1" value="0" />unset
+            <input type="button" uId="1" actionId="9" value="remove" class="test" id="test" />
+        </p>
+
         <h3>Set Action for: @userInfo.UserName</h3>
         @using (Ajax.BeginForm(new AjaxOptions()
         {

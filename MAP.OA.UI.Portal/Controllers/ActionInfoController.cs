@@ -72,9 +72,9 @@ namespace MAP.OA.UI.Portal.Controllers
             }
             string Url = actionInfo.Url.ToLower();
             string HttpMethod = actionInfo.HttpMethod.ToLower();
-            var tmp = ActionInfoService.GetEntities(u => u.Url.ToLower() == Url && u.HttpMethod.ToLower() == HttpMethod);
+            var tmp = ActionInfoService.GetEntities(u => u.Url.ToLower() == Url && u.HttpMethod.ToLower() == HttpMethod && u.DelFlag == (short)DelFlagEnum.Normal).FirstOrDefault();
             if (tmp != null)
-                return Content("action already exists: <br/> URL: " + Url + "<br/> HttpMethod: " + HttpMethod);
+                return Content("action already exists: <br/> URL: " + tmp.Url + "<br/> HttpMethod: " + tmp.HttpMethod);
 
             actionInfo.ModifiedOn = DateTime.Now;
             actionInfo.SubTime = DateTime.Now;

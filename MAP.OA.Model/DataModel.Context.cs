@@ -31,5 +31,9 @@ namespace MAP.OA.Model
         public DbSet<ActionInfo> ActionInfo { get; set; }
         public DbSet<UserInfoExt> UserInfoExt { get; set; }
         public DbSet<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
+        public DbSet<WF_Temp> Wf_Temp { get; set; }
+        public DbSet<WF_Instance> Wf_Instance { get; set; }
+        public DbSet<FileInfo> FileInfo { get; set; }
+        public DbSet<WF_Procedure> WF_Procedure { get; set; }
     }
 }

@@ -14,6 +14,10 @@ namespace MAP.OA.EFDAL
     {
     }
 
+    public partial class FileInfoDal: BaseDal<FileInfo>, IFileInfoDal
+    {
+    }
+
     public partial class OrderInfoDal: BaseDal<OrderInfo>, IOrderInfoDal
     {
     }
@@ -31,6 +35,18 @@ namespace MAP.OA.EFDAL
     }
 
     public partial class UserInfoExtDal: BaseDal<UserInfoExt>, IUserInfoExtDal
+    {
+    }
+
+    public partial class WF_InstanceDal: BaseDal<WF_Instance>, IWF_InstanceDal
+    {
+    }
+
+    public partial class WF_ProcedureDal: BaseDal<WF_Procedure>, IWF_ProcedureDal
+    {
+    }
+
+    public partial class WF_TempDal: BaseDal<WF_Temp>, IWF_TempDal
     {
     }
 

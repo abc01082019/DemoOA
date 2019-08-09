@@ -12,6 +12,10 @@ namespace MAP.OA.IBLL
 	{
 	}
 	
+	public partial interface IFileInfoService: IBaseService<FileInfo>
+	{
+	}
+	
 	public partial interface IOrderInfoService: IBaseService<OrderInfo>
 	{
 	}
@@ -29,6 +33,18 @@ namespace MAP.OA.IBLL
 	}
 	
 	public partial interface IUserInfoExtService: IBaseService<UserInfoExt>
+	{
+	}
+	
+	public partial interface IWF_InstanceService: IBaseService<WF_Instance>
+	{
+	}
+	
+	public partial interface IWF_ProcedureService: IBaseService<WF_Procedure>
+	{
+	}
+	
+	public partial interface IWF_TempService: IBaseService<WF_Temp>
 	{
 	}
 }

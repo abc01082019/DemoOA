@@ -46,6 +46,10 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Spring.Net\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Memcached\log4net.dll</HintPath>
@@ -70,6 +74,7 @@
     <Reference Include="Spring.Web.Mvc">
       <HintPath>..\packages\Spring.Net\Spring.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Activities" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -1066,6 +1071,7 @@
     <Content Include="Content\jquery-easyui-1.8.2\themes\mobile.css" />
     <Content Include="Content\jquery-easyui-1.8.2\themes\react.css" />
     <Content Include="Content\jquery-easyui-1.8.2\themes\vue.css" />
+    <Content Include="Content\jquery.form.js" />
     <Content Include="Content\ligerui\Source\api\document\Accordion\event.htm" />
     <Content Include="Content\ligerui\Source\api\document\Accordion\index.htm" />
     <Content Include="Content\ligerui\Source\api\document\Accordion\method.htm" />
@@ -1752,6 +1758,9 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
+    <Content Include="Scripts\jquery.form.min.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -1774,6 +1783,8 @@
     <Compile Include="Controllers\RoleInfoController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\UserLoginController.cs" />
+    <Compile Include="Controllers\WFInstanceController.cs" />
+    <Compile Include="Controllers\WFTempController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1803,6 +1814,11 @@
     <Content Include="Views\RoleInfo\Show.cshtml" />
     <Content Include="Views\ActionInfo\SetRole.cshtml" />
     <Content Include="Views\UserInfo\SetAction.cshtml" />
+    <Content Include="Views\WFTemp\Index.cshtml" />
+    <Content Include="Views\WFTemp\Add.cshtml" />
+    <Content Include="Views\WFTemp\Edit.cshtml" />
+    <Content Include="Views\WFTemp\StartWF.cshtml" />
+    <Content Include="Views\WFInstance\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1847,6 +1863,10 @@
     <ProjectReference Include="..\MAP.OA.NHDAL\MAP.OA.NHDAL.csproj">
       <Project>{bb6476b5-3d93-4e47-abe2-e175ee082c52}</Project>
       <Name>MAP.OA.NHDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MAP.OA.Workflow\MAP.OA.Workflow.csproj">
+      <Project>{F4AC98D8-99D6-4E10-916B-60451A6FD42F}</Project>
+      <Name>MAP.OA.Workflow</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
